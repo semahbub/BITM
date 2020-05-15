@@ -1,0 +1,30 @@
+Following are short descriptions of the numbered items in the trace:
+ 01 The RSVP Agent is started.
+ 02 The configuration file being used is reported.
+ 03 The name of the TCP/IP stack that the RSVP Agent associates itself with is reported.
+ 04 The name and IP address of the interfaces configured to the associated stack are reported. Note that the RSVP Agent gets notified by the stack of any interface additions, deletions, or changes after this point.
+ 05 The interfaces are initialized one by one.
+ 06 Some interface types are not enabled for multicasting. Therefore, when the RSVP Agent tries to enable multicasting, a warning is reported. Such interfaces can still be used for unicasting.
+ 07 RSVP Agent initialization is complete.
+ 08 An application makes its first RAPI call, initializing the RAPI interface with the RSVP Agent.
+ 09 The type of RAPI request is SESSION, meaning a rapi_session() call was made.
+ 10 The RSVP Agent determines what the application sends based on the specified destination address not being a local interface.
+ 11 The outbound interface to use for the session is returned from the stack.
+ 12 The application issues a rapi_sender() call, passing the Tspec.
+ 13 The Policy Agent interface is initialized.
+ 14 The policy action "CLCat2" is obtained from the Policy Agent for the specified flow.
+ 15 The RSVP Agent constructs an RSVP PATH packet to be sent to the destination.
+ 16 The flow enters the pathed stated (PATHED), meaning a PATH packet has been sent for the flow.
+ 17 An RSVP RESV packet is received from the RSVP Agent at the receiver node, specifying the reservation parameters.
+ 18 The RSVP Agent installs the reservation request into the TCP/IP stack and registers the flow with the Policy Agent.
+ 19 The type of reservation request is shown (CL, for Controlled Load) along with the reservation parameters (the r, b, p, m, M values in Tspec format).
+ 20 The RESV packet values are passed to the sender application.
+ 21 The flow enters the reserved state (RESVED), meaning the reservation has been put in place and the RESV packet has been forwarded to the previous hop (in this case the sender application).
+ 22 A T1 timeout occurs, meaning a PATH refresh packet is sent. This occurs every 15 seconds.
+ 23 A refreshed RESV packet is received from the RSVP Agent at the receiver node. This occurs every 30 seconds.
+ 24 The application issues a rapi_release() call to end the RAPI session.
+ 25 The reservation is removed from the TCP/IP stack and unregistered from the Policy Agent.
+ 26 A PATHTEAR packet is constructed and sent, to tear down the flow along the data path.
+ 27 The flow enters the sessioned state (SESSIONED), meaning that the flow has been torn down.
+ 28 The application closes the API session, resulting in an error being reported because the state of the flow is SESSIONED. This error can be ignored.
+ 29 A SIGTERM signal is received (due to a kill command issued from the UNIX shell), and the RSVP Agent shuts itself down.

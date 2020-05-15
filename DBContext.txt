@@ -1,0 +1,6 @@
+Scaffold-DbContext "{ Your DB connect string }" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+Scaffold-DbContext "Server=(local);Database=TestOrg;User Id=piit;password=piit123;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext "Server=DESKTOP-UQ0555I\SQLEXPRESS;Database=BITM9;Trusted_Connection=true;MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
