@@ -1,0 +1,85 @@
+﻿@model IEnumerable<App13_SearchSortPagination.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Pager p = ViewBag.pager;
+    int i = (p.CurrentPage-1)*p.PageSize + 1;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="/Employees/Index/?pg=1"> First Page </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="/Employees/Index/?pg=@(p.CurrentPage-1)"> Previous Page </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="/Employees/Index/?pg=@(p.CurrentPage+1)"> Next Page </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="/Employees/Index/?pg=@(p.TotalPages)"> Last Page </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>SL#</th>
+            <th>
+                @* <a asp-action="Index" asp-sortby="name" asp-ord="@ViewBag.ord">@Html.DisplayNameFor(model => model.EmployeeName)</a> *@
+                <a href="/Employees/Index/?sortby=name&pg=@p.CurrentPage&ord=@ViewBag.ord">@Html.DisplayNameFor(model => model.EmployeeName)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayBasis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@i.</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PayBasis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionTitle)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        i++;
+}
+    </tbody>
+</table>
