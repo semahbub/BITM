@@ -1,0 +1,8 @@
+
+
+https://www.jqueryscript.net/table/jQuery-Plugin-To-Export-Table-Data-To-CSV-File-table2csv.html
+
+https://www.npmjs.com/package/table2csv?activeTab=code
+
+
+

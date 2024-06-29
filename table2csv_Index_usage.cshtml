@@ -1,0 +1,110 @@
+﻿@model IEnumerable<ExamMaster.Models.QuestionBank>
+
+@{
+    ViewData["Title"] = "Index";
+    int i = 1;
+}
+
+<h3 class="alert alert-info">Question Bank</h3>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Question</a>
+    <button id="btnexport" class="btn btn-success"> Export CSV </button>
+</p>
+<table id="tbl2" class="table">
+    <thead>
+        <tr>
+            <th>SL#</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuestionTitle)
+            </th>
+            <th>
+                Answers
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorrectAnswer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DifficultyLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@i.</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.SubjectCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionTitle)
+            </td>
+            <td>
+               a) @Html.DisplayFor(modelItem => item.AnswerA) <br />
+               b) @Html.DisplayFor(modelItem => item.AnswerB) <br />
+               c) @Html.DisplayFor(modelItem => item.AnswerC) <br />
+               d) @Html.DisplayFor(modelItem => item.AnswerD)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CorrectAnswer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DifficultyLevel)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+            </tr>
+            i++;
+}
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("p").click(function () {
+                $(this).hide();
+            });
+
+            $('#btnshow').click(function () {
+                let u = $("#userinput").val();
+                alert('Your input is ' + u);
+            });
+
+            let options = {
+                "separator": ",",
+                "newline": "\n",
+                "quoteFields": true,
+                "excludeColumns": "",
+                "excludeRows": "",
+                "trimContent": true,
+                "filename": "data_table.csv",
+                "appendTo": "#output"
+            };
+
+        
+            $('#btnexport').click(function () {
+                $('#tbl2').table2csv('download', options);
+                alert('Hi, I am inside code block ');
+            });
+
+        });
+    </script>
+}
+
