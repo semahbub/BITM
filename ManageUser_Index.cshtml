@@ -1,0 +1,200 @@
+﻿@model IEnumerable<string>
+@{
+    ViewData["Title"] = "Manage User Permission";
+    Layout = "_LayoutForLoggedInUser";
+}
+<h4 class="alert alert-primary"></h4>
+
+<h5 id="msg" class="text-primary">@ViewBag.msg</h5>
+<form asp-action="SetPermission" method="post">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-md-7">
+                <label>User Email : </label>
+                <select name="uid" class="form-control form-control-sm" id="mid">
+                    @if (ViewBag.userlist != null)
+                    {
+                        foreach (var item in ViewBag.userlist)
+                        {
+                            <option value="@item.Email"> @item.Email </option>
+                        }
+                    }
+                </select>
+                <br />
+            </div>
+            @*
+            <div class="col-md-2">
+            <div>
+            <p style="height:17px;"></p>
+            </div>
+            <a href="/User/Index" class="btn btn-success btn-sm"> Go Back </a>
+            </div>
+            *@
+            <div class="col-md-5 float-right">
+                <br />
+                @*                 <a asp-action="AddUser" asp-controller="ManageUser" class="btn btn-outline-deep-purple btn-sm">Create User</a>
+                *@<a asp-action="ListUser" asp-controller="ManageUser" class="btn btn-primary btn-md">User List </a>
+                <a asp-action="ResetPassword" asp-controller="ManageUser" class="btn btn-primary btn-md"> Reset Password </a>
+            </div>
+        </div>
+
+        <div class="row  border border-dark">
+            <div class="col-md-12">
+                <table class="table table-responsive-sm w-100">
+                    @*<thead class="border border-primary" id="headingOne" role="tab">*@
+                    <thead class="rgba-grey-light">
+                        <tr>
+                            <th colspan="7">
+                                <h4 class="text-black">Permission</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="show" style="background-color:#e2e2e2;">
+
+                        <tr>
+                            <td><b>Product Information</b></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" Id="ProductAll" value="" />
+                                <label class="form-check-label" for="exampleCheck1">All Tasks</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="form-check-input ProductAll" name="perm" value="Can_View_Product" id="Can_View_Product" />
+                                <label class="form-check-label" for="exampleCheck1"> View Product </label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input ProductAll" name="perm" value="Can_Add_Product" id="Can_Add_Product" />
+                                <label class="form-check-label" for="exampleCheck1"> Add Product</label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input ProductAll" name="perm" value="Can_Edit_Product" id="Can_Edit_Product" />
+                                <label class="form-check-label" for="exampleCheck1">Edit Product</label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input ProductAll" name="perm" value="Can_Delete_Product" id="Can_Delete_Product" />
+                                <label class="form-check-label" for="exampleCheck1">Delete Product</label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input ProductAll" name="perm" value="Can_View_All_Products" id="Can_View_All_Products" />
+                                <label class="form-check-label" for="exampleCheck1">View All Products</label>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td><b>Employee </b></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" Id="EmpAll" value="" />
+                                <label class="form-check-label" for="exampleCheck1">All Task</label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input EmpAll" name="perm" value="Can_View_Emp" id="Can_View_Emp" />
+                                <label class="form-check-label" for="exampleCheck1">View Employee</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="form-check-input EmpAll" name="perm" value="Can_Add_Emp" id="Can_Add_Emp" />
+                                <label class="form-check-label" for="exampleCheck1">Add Employee</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="form-check-input EmpAll" name="perm" value="Can_Edit_Emp" id="Can_Edit_Emp" />
+                                <label class="form-check-label" for="exampleCheck1">Edit Employee</label>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" class="form-check-input EmpAll" name="perm" value="Can_Delete_Emp" id="Can_Delete_Emp" />
+                                <label class="form-check-label" for="exampleCheck1">Delete Employee</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="form-check-input EmpAll" name="perm" value="Can_View_All_Emp" id="Can_View_All_Emp" />
+                                <label class="form-check-label" for="exampleCheck1">View All Employees</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <button type="submit" class="btn btn-primary btn-md"> Grant Permission </button>
+                <br />
+            </div>
+        </div>
+    </div>
+</form>
+
+<br />
+<br />
+
+
+<div style="height:60px;">
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#msg').fadeOut(6000);
+
+            $('#ProductAll').click(function (event) {
+                if (this.checked) {
+                    $('.ProductAll').each(function () {
+                        $(this).prop('checked', true);
+                    });
+                } else {
+                    $('.ProductAll').each(function () {
+                        $(this).prop('checked', false);
+                    });
+                }
+            });
+
+            $('#EmpAll').click(function (event) {
+                if (this.checked) {
+                    $('.EmpAll').each(function () {
+                        $(this).prop('checked', true);
+                    });
+                } else {
+                    $('.EmpAll').each(function () {
+                        $(this).prop('checked', false);
+                    });
+                }
+            });
+
+
+            $("#mid").on('change', function () {
+                var id = $("#mid option:selected").val();
+
+                $("input[type=checkbox]").prop('checked', false);
+
+                $.ajax({
+                    url: '/ManageUser/getuserclaims/',
+                    type: 'GET',
+                    cache: false,
+                    dataType: 'JSON',
+                    data: { 'email': id },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.result == 'ok') {
+                            //$("#mid").empty();
+                            $.each(data.mydata, function (i, obj) {
+                                console.log(obj); //console.log(obj.Value);
+                                let o = $('#' + obj); //let o = $('#' + obj.Type);
+                                console.log(o);
+                                o.prop('checked', true);
+                                //$("#mid").append(o);
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+        });
+
+    </script>
+
+}
+
+
